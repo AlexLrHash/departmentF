@@ -6,7 +6,6 @@
           <img :src="department.background" width="150" height="150" alt="">
           <h1 class="display-4 font-weight-normal">{{ department.name }}</h1>
           <p class="lead font-weight-normal">{{ department.description }}</p>
-          <a class="btn btn-outline-secondary" href="#">Coming soon</a>
         </div>
         <div class="product-device box-shadow d-none d-md-block"></div>
         <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
@@ -27,13 +26,12 @@
           <div class="row">
             <div class="col-md-4" v-for="department in departments.data">
               <div class="card mb-4 box-shadow">
-                <img class="card-img-top" :src="department.background" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;"data-holder-rendered="true">
+                <img class="card-img-top" :src="department.background" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" data-holder-rendered="true">
                 <div class="card-body">
                   <p class="card-text">{{ department.name }}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <NuxtLink :to="`departments/${department.id}`" type="button" class="btn btn-sm btn-outline-secondary">Подробннее</NuxtLink>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Преподаватели</button>
                     </div>
                     <small class="text-muted"></small>
                   </div>

@@ -10,8 +10,7 @@
               <p class="card-text"><NuxtLink to="/admin/users" class="text-secondary">Пользователи</NuxtLink></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <NuxtLink :to="`/admin/users`" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</NuxtLink>
                 </div>
                 <small class="text-muted">9 mins</small>
               </div>
@@ -25,8 +24,7 @@
               <p class="card-text"><NuxtLink to="/admin/disciplines" class="text-secondary">Дисциплины</NuxtLink></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <NuxtLink :to="`/admin/disciplines`" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</NuxtLink>
                 </div>
                 <small class="text-muted">9 mins</small>
               </div>
@@ -40,8 +38,7 @@
               <p class="card-text"><NuxtLink to="departments" class="text-secondary">Отделения</NuxtLink></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <NuxtLink :to="`/admin/departments`" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</NuxtLink>
                 </div>
                 <small class="text-muted">9 mins</small>
               </div>

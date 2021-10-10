@@ -1,6 +1,5 @@
 <template>
   <body>
-  {{ userAvatar }}
   <nav class="site-header sticky-top py-1">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2" href="#">
@@ -16,6 +15,9 @@
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <img class="rounded-circle" :src="user.avatar" width="250" height="250" alt="">
+      <div class="" v-if="errors.avatar">
+        <span class="text-center text-danger">{{ errors.avatar }}</span>
+      </div>
       <div class="row">
         <input type="file" @change="onAttachmedChange" class="form-control mt-2 col-8 mr-2">
         <button type="submit" class="btn btn-primary mt-2" @click="updateUserFace">Загрузить</button>
@@ -24,7 +26,12 @@
       <p class="lead font-weight-normal">{{ user.email }}</p>
       <h6>Хотите изменить имя?</h6>
       <div class="row">
-        <input type="text" class="form-control col-8 mr-2" placeholder="Введите новое имя" v-model="userName">
+        <div class="" v-if="errors.name">
+          <label for="userNameField">
+            <span class="text-center text-danger">{{ errors.name }}</span>
+          </label>
+        </div>
+        <input type="text" class="form-control col-8 mr-2" id="userNameField" placeholder="Введите новое имя" v-model="userName">
         <button @click="updateUserProfile" class="btn btn-outline-secondary">Изменить</button>
       </div>
     </div>
@@ -44,7 +51,8 @@ export default {
     return {
       user: '',
       userName: '',
-      userAvatar: ""
+      userAvatar: "",
+      errors: ''
     }
   },
   async mounted() {
@@ -79,25 +87,35 @@ export default {
           name: this.userName,
         })
       })
+      const responseData = await response.json();
+      this.errors = new Object();
       if (response.ok) {
-        this.user = await response.json();
-        this.user = this.user.data;
+        this.user = responseData.data;
+      } else if (response.status == 422) {
+        console.log(responseData)
+        const errors = responseData.errors;
+        this.errors.name = errors.name ? errors.name[0] : null;
       }
     },
     async updateUserFace()
     {
-      const formData = new FormData();
-      formData.append('avatar', this.userAvatar);
-      const response = await fetch('http://localhost:8000/api/user/avatar/upload', {
-        headers: {
-          'Authorization': "Bearer " + localStorage.getItem('jwt'),
-        },
-        method: "post",
-        body: formData
-      })
-      let responseData = await response.json()
-      if (response.ok) {
-        this.user = responseData.data;
+      if (this.userAvatar) {
+        const formData = new FormData();
+        formData.append('avatar', this.userAvatar);
+        const response = await fetch('http://localhost:8000/api/user/avatar/upload', {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem('jwt'),
+          },
+          method: "post",
+          body: formData
+        })
+        let responseData = await response.json()
+        if (response.ok) {
+          this.user = responseData.data;
+        }
+      } else {
+        this.errors = new Object();
+        this.errors.avatar = 'Передайте аватар';
       }
     },
     onAttachmedChange(e)

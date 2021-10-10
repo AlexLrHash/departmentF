@@ -47,8 +47,8 @@
               <tbody>
               <tr v-for="discipline in disciplines">
                 <td>{{ discipline.name }}</td>
-                <td><input type="number" v-model="disciplineNumberOfLabs"></td>
-                <td><input type="number" v-model="disciplineNumberOfPractices"></td>
+                <td><input type="number" class="form-control" v-model="disciplineNumberOfLabs"></td>
+                <td><input type="number" class="form-control" v-model="disciplineNumberOfPractices"></td>
                 <td>{{ discipline.description  }}</td>
                 <td><button @click="addDiscipline(discipline.id)" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                   <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>

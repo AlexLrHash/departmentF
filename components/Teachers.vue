@@ -30,8 +30,8 @@
       </section>
     </div>
     <div v-else="" class="">
-      <div class="row" v-for="teacher in teachers.data">
-        <div class="col-lg-4">
+      <div class="row">
+        <div class="col-lg-4" v-for="teacher in teachers.data">
           <img class="rounded-circle" :src="teacher.avatar" alt="Generic placeholder image" width="140" height="140">
           <h2>{{ teacher.name }}</h2>
           <p>{{ teacher.email }}</p>
