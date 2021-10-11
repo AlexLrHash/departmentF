@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       users: "",
-      userName: "Kiera",
+      userName: "",
       userEmail: "",
       userRole: "TEACHER"
     }
