@@ -171,7 +171,6 @@ export default {
       let responseData = await response.json();
       if (response.status == 422) {
         this.errors = new Object();
-        console.log(responseData.errors);
         const errorNumberOfLabs = responseData.errors.number_of_labs;
         const errorNumberOfPractices = responseData.errors.number_of_practices;
         this.errors.number_of_labs = errorNumberOfLabs ? errorNumberOfLabs[0] : null;

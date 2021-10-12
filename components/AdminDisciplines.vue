@@ -14,6 +14,11 @@
         <div class="ml-2">
           <button class="btn btn-success" @click="getDisciplines">Поиск</button>
         </div>
+        <div class="ml-2">
+          <button class="btn btn-success" @click="show=!show"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
+          </svg></button>
+        </div>
       </div>
       <br>
       <table class="table table-striped table-sm">
@@ -22,8 +27,6 @@
           <th>#</th>
           <th>Название</th>
           <th>Описание</th>
-          <th>Количество лаб</th>
-          <th>Количество практик</th>
           <th>Преподаватели</th>
         </tr>
         </thead>
@@ -32,8 +35,6 @@
           <td></td>
           <td>{{ discipline.name }}</td>
           <td>{{ discipline.description }}</td>
-          <td>{{ discipline.number_of_labs }}</td>
-          <td>{{ discipline.number_of_practices }}</td>
           <td>
             <select name="" class="form-control">
               <option value="" v-for="teacher in discipline.teachers">{{ teacher.name }}</option>
@@ -43,6 +44,32 @@
         </tbody>
       </table>
     </div>
+    <b-modal id="bv-modal-example"  v-model="show" hide-footer>
+      <template #modal-title>
+        Создание дисциплины
+      </template>
+      <div class="d-block text-center">
+        <div class="" v-if="errors.name">
+          <div class="text-danger">{{ errors.name }}</div>
+        </div>
+        <input type="text" placeholder="Введите название дисциплины" v-model="disciplineNameForCreating" class="form-control">
+        <div class="" v-if="errors.description">
+          <div class="text-danger">{{ errors.description }}</div>
+        </div>
+        <textarea placeholder="Введите описание" v-model="disciplineDescriptionForCreating" class="form-control mt-2" id="" cols="30" rows="10"></textarea>
+        <div class="" v-if="errors.department">
+          <div class="text-danger">{{ errors.department }}</div>
+        </div>
+        <select v-model="departmentIdForCreating" class="form-control mt-2">
+          <option value="" disabled>Выберите отделение</option>
+          <option :value="department.id" v-for="department in departments">{{ department.name }}</option>
+        </select>
+      </div>
+      <div class="row text-center">
+        <b-button class="col-5 ml-4 mr-2 mt-3 btn btn-success" block @click="createDiscipline">Создать дисциплину</b-button>
+        <b-button class="col-5 ml-2 mt-3" block @click="$bvModal.hide('bv-modal-example')">Отмена</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -55,6 +82,12 @@ export default {
       disciplineName: "",
       disciplineTeacher: "",
       disciplineTeachers: "",
+      disciplineNameForCreating: '',
+      departmentIdForCreating: '',
+      disciplineDescriptionForCreating: '',
+      departments: '',
+      show: false,
+      errors: '',
     }
   },
   watch: {
@@ -68,6 +101,7 @@ export default {
   },
   async mounted() {
     await this.getDisciplines();
+    await this.getDepartments();
   },
   methods: {
     async getDisciplines() {
@@ -104,6 +138,50 @@ export default {
     selectTeacher(teacherName) {
       this.disciplineTeacher = teacherName;
       this.disciplineTeachers = '';
+    },
+
+    async getDepartments() {
+      const response = await fetch(`http://localhost:8000/api/admin/departments`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        },
+      });
+      if (response.status == 500) {
+
+      } else {
+        this.departments = await response.json();
+        this.departments = this.departments.data;
+      }
+    },
+    async createDiscipline() {
+      const response = await fetch(`http://localhost:8000/api/admin/disciplines`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        },
+        method: 'post',
+        body: JSON.stringify({
+          'name': this.disciplineNameForCreating,
+          'department_id': this.departmentIdForCreating,
+          'description': this.disciplineDescriptionForCreating
+        })
+      })
+      const responseData = await response.json();
+      if (response.status == 422) {
+        this.errors = new Object();
+        const errorsName = responseData.errors.name
+        const errorsDescription = responseData.errors.description
+        const errorsDepartment = responseData.errors.department_id
+        this.errors.name = errorsName ? errorsName[0] : null
+        this.errors.description = errorsDescription ? errorsDescription[0] : null
+        this.errors.department = errorsDepartment ? errorsDepartment[0]: null
+      } else {
+        this.disciplines.push(responseData.data);
+        this.show = false
+      }
     }
   }
 }
