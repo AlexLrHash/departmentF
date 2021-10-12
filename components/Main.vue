@@ -69,8 +69,7 @@
           <tr>
             <th>#</th>
             <th>Имя</th>
-            <th>Количество лабораторных</th>
-            <th>Количество практик</th>
+            <th>Описание</th>
             <th>Преподаватели</th>
           </tr>
           </thead>
@@ -78,8 +77,7 @@
           <tr v-for="discipline in disciplines.data">
             <td></td>
             <td>{{ discipline.name}}</td>
-            <td>{{ discipline.number_of_labs }}</td>
-            <td>{{ discipline.number_of_practices }}</td>
+            <td>{{ discipline.description }}</td>
             <td><NuxtLink :to="`teachers/disciplines/` + discipline.id">Посмотреть преподавателей</NuxtLink></td>
           </tr>
           </tbody>
