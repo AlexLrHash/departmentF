@@ -20,6 +20,7 @@
       </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" @click="loginUser">Авторизироваться</button>
+    <p>Впервые у нас на сайте? <NuxtLink to="/auth/register">Зарегистрируйтесь</NuxtLink></p>
     <br>
     <p class="mt-3 mb-3 text-muted">© 2021-2022</p>
   </div>

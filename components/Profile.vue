@@ -89,6 +89,7 @@ export default {
       this.errors = new Object();
       if (response.ok) {
         this.user = responseData.data;
+        this.resetData();
       } else if (response.status == 422) {
         console.log(responseData)
         const errors = responseData.errors;
@@ -119,6 +120,11 @@ export default {
     onAttachmedChange(e)
     {
       this.userAvatar = e.target.files[0]
+    },
+    resetData() {
+      this.errors = '';
+      this.userAvatar = '';
+      this.userName = '';
     }
   }
 }

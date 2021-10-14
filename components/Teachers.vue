@@ -6,7 +6,14 @@
           <img class="rounded-circle" :src="teacher.avatar" alt="Generic placeholder image" width="200" height="200">
           <h1 class="jumbotron-heading">{{ teacher.name }}</h1>
           <p class="lead text-muted">{{ teacher.email }}</p>
-          <table class="table table-striped table-sm">
+          <div class="text-center">
+            <button class="btn btn-primary ml-2" @click="likeTeacher">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg> {{ this.teacherCountLikes }}
+            </button>
+          </div>
+          <table class="table table-striped table-sm mt-2">
             <thead>
             <tr>
               <th>Название</th>
@@ -39,6 +46,17 @@
         </div><!-- /.col-lg-4 -->
       </div>
     </div>
+    <b-modal id="bv-modal-example" v-model="showErrorModal" hide-footer>
+      <template #modal-title>
+        Оценка преподавателя
+      </template>
+      <div class="d-block text-center">
+        Вы уже оценили этого преподавателя.
+      </div>
+      <div class="row text-center">
+        <b-button class="ml-2 mt-3" block @click="$bvModal.hide('bv-modal-example')">Назад</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -50,6 +68,8 @@ export default {
       teachers: "",
       teacher: "",
       teacherId: "",
+      teacherCountLikes: 0,
+      showErrorModal: 0
     }
   },
   async mounted() {
@@ -66,6 +86,8 @@ export default {
       } else {
         this.teacher = await response.json();
         this.teacher = this.teacher.data;
+        this.teacherCountLikes = this.teacher.count_likes;
+        this.teacherCountDislikes = this.teacher.count_dislikes;
       }
     } else {
       const response = await fetch('http://localhost:8000/api/teachers', {
@@ -80,6 +102,28 @@ export default {
         this.teachers = await response.json();
       }
     }
+
+  },
+  methods: {
+    async likeTeacher() {
+      this.teacherId = this.$route.params.id;
+      if (this.teacherId) {
+        const response = await fetch(`http://localhost:8000/api/teachers/${this.teacherId}/like`, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            'Authorization': "Bearer " + localStorage.getItem('jwt'),
+          },
+          method: 'post'
+        });
+        if (response.status == 422) {
+          this.showErrorModal = true;
+        } else {
+          this.teacherCountLikes ++;
+          // this.teacher = this.teacher.data;
+        }
+      }
+    },
   }
 }
 </script>
