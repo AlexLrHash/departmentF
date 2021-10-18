@@ -118,6 +118,8 @@ export default {
         });
         if (response.status == 422) {
           this.showErrorModal = true;
+        } else if (response.status == 403) {
+          this.$router.push({path: '/auth/verify/'});
         } else {
           this.teacherCountLikes ++;
           // this.teacher = this.teacher.data;

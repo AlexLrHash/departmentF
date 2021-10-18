@@ -18,6 +18,16 @@
     <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="">
     <div><br></div>
     <input v-model="passwordConfirmation" type="password" id="inputPasswordConfirmation" class="form-control" placeholder="Подтвердите пароль" required="">
+    <div><br></div>
+    <div class="">
+      <select v-model="userRole" class="form-control" id="">
+        <option value="" disabled>Выберите роль</option>
+        <option value="TEACHER">Преподаватель</option>
+        <option value="STUDENT">Студент</option>
+        <option value="USER">Новый пользователь</option>
+        <option value=""></option>
+      </select>
+    </div>
     <div class="checkbox mb-3">
       <label>
         <input type="checkbox" value="remember-me"> Запомнить меня
@@ -46,12 +56,11 @@ export default {
       passwordConfirmation: '',
       is_consent_terms_of_use: "",
       is_consent_privacy_policy: "",
-      errors: ''
+      errors: '',
+      userRole: '',
     }
   },
   methods: {
-    // TODO сделать прелоадер
-    // TODO вставить в систему регистрацию
     async registerUser() {
       const response = await fetch('http://localhost:8000/api/register', {
         headers: {
@@ -65,7 +74,8 @@ export default {
           password_confirmation: this.passwordConfirmation,
           email: this.email,
           is_consent_privacy_policy: this.is_consent_privacy_policy ? 1 : 0,
-          is_consent_terms_of_use: this.is_consent_terms_of_use ? 1 : 0
+          is_consent_terms_of_use: this.is_consent_terms_of_use ? 1 : 0,
+          role: this.userRole
         })
       });
       let responseData = await response.json();

@@ -18,6 +18,9 @@
         <li class="nav-item active">
           <NuxtLink to="/admin/departments" class="nav-link" href="#">Отделения</NuxtLink>
         </li>
+        <li class="nav-item active">
+          <NuxtLink to="/admin/likes" class="nav-link" href="#">Лайки</NuxtLink>
+        </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <NuxtLink to="/" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Выйти из админ панели</NuxtLink>
