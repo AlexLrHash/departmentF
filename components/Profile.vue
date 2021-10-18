@@ -10,34 +10,74 @@
     </div>
   </div>
 
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-    <div class="col-md-5 p-lg-5 mx-auto my-5">
-      <img class="rounded-circle" :src="user.avatar" width="250" alt="">
-      <div class="" v-if="errors.avatar">
-        <span class="text-center text-danger">{{ errors.avatar }}</span>
-      </div>
-      <div class="row">
-        <input type="file" @change="onAttachmedChange" class="form-control mt-2 col-8 mr-2">
-        <button type="submit" class="btn btn-primary mt-2" @click="updateUserFace">Загрузить</button>
-      </div>
-      <h1 class="display-4 font-weight-normal">{{ user.name }}</h1>
-      <p class="lead font-weight-normal">{{ user.email }}</p>
-      <h6>Хотите изменить имя?</h6>
-      <div class="row">
-        <div class="" v-if="errors.name">
-          <label for="userNameField">
-            <span class="text-center text-danger">{{ errors.name }}</span>
-          </label>
+  <div class="position-relative overflow-hidden p-2 bg-light">
+    <div class="text-center">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <img class="rounded-circle" :src="user.avatar" width="250" alt="">
+        <div class="" v-if="errors.avatar">
+          <span class="text-center text-danger">{{ errors.avatar }}</span>
         </div>
-        <input type="text" class="form-control col-8 mr-2" id="userNameField" placeholder="Введите новое имя" v-model="userName">
-        <button @click="updateUserProfile" class="btn btn-outline-secondary">Изменить</button>
+        <div class="row">
+          <input type="file" @change="onAttachmedChange" class="form-control mt-2 col-8 mr-2">
+          <button type="submit" class="btn btn-primary mt-2" @click="updateUserFace">Загрузить</button>
+        </div>
+        <h1 class="display-4 font-weight-normal">{{ user.name }}</h1>
+        <p class="lead font-weight-normal">{{ user.email }}</p>
+        <h6>Хотите изменить имя?</h6>
+        <div class="row">
+          <div class="" v-if="errors.name">
+            <label for="userNameField">
+              <span class="text-center text-danger">{{ errors.name }}</span>
+            </label>
+          </div>
+          <input type="text" class="form-control col-8 mr-2" id="userNameField" placeholder="Введите новое имя" v-model="userName">
+          <button @click="updateUserProfile" class="btn btn-outline-secondary">Изменить</button>
+        </div>
       </div>
+      <div class="product-device box-shadow d-none d-md-block"></div>
     </div>
-    <div class="product-device box-shadow d-none d-md-block"></div>
-    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-  </div>
-  <div class="">
-
+    <b-modal id="bv-modal-example" v-model="showStudentModal" hide-footer>
+      <template #modal-title>
+        Студенческая информация
+      </template>
+      <div class="d-block text-center">
+        <div class="" v-if="errors.studentsCourse">
+          <div class="text-danger">{{ errors.studentsCourse }}</div>
+        </div>
+        <input type="number" placeholder="Введите курс обучения" v-model="studentCourse" class="form-control mt-2">
+        <div class="" v-if="errors.studentId">
+          <div class="text-danger">{{ errors.studentId }}</div>
+        </div>
+        <input type="text" placeholder="Введите номер студенческого" v-model="studentId" class="form-control mt-2">
+        <div class="" v-if="errors.studentGroup">
+          <div class="text-danger">{{ errors.studentGroup }}</div>
+        </div>
+        <input placeholder="Введите группу" v-model="studentGroup" class="form-control mt-2">
+        <div class="" v-if="errors.studentDepartmentId">
+          <div class="text-danger">{{ errors.studentDepartmentId }}</div>
+        </div>
+        <select v-model="studentDepartmentId" class="form-control mt-2">
+          <option value="" disabled>Выберите отделение</option>
+          <option :value="department.id" v-for="department in departments">{{ department.name }}</option>
+        </select>
+      </div>
+      <div class="row text-center">
+        <b-button class="col-5 ml-4 mr-2 mt-3 btn btn-success" block @click="updateStudentParams">Изменить</b-button>
+        <b-button class="col-5 ml-2 mt-3" block @click="closeStudentParamModal">Отмена</b-button>
+      </div>
+    </b-modal>
+    <div class="" v-if="user.role == 'STUDENT'">
+      <h3>Студент</h3>
+      <button @click="openStudentInfo" class="btn btn-primary">Посмотреть вашу студенческую информацию</button>
+    </div>
+    <div class="" v-if="user.role == 'TEACHER'">
+      <h3>Преподаватель</h3>
+      <NuxtLink class="btn btn-primary" :to=`/teachers/${user.id}`>Перейди на страницу</NuxtLink>
+    </div>
+    <div class="" v-if="user.role == 'ADMIN'">
+      <h3>Админ</h3>
+      <NuxtLink class="btn btn-primary" to="/admin/">Административная панель</NuxtLink>
+    </div>
   </div>
   </body>
 </template>
@@ -50,11 +90,18 @@ export default {
       user: '',
       userName: '',
       userAvatar: "",
-      errors: ''
+      errors: '',
+      showStudentModal: false,
+      studentCourse: '',
+      studentDepartmentId: '',
+      departments: '',
+      studentGroup: '',
+      studentId: ''
     }
   },
   async mounted() {
     await this.getUser();
+    await this.getDepartments();
   },
   methods: {
     async getUser() {
@@ -68,6 +115,9 @@ export default {
       if (response.ok) {
         this.user = await response.json();
         this.user = this.user.data;
+        if (this.user.role == "STUDENT") {
+          await this.getStudentParams();
+        }
       } else if (response.status == 401) {
         this.$router.push('/errors/unauthenticated');
       }
@@ -125,6 +175,116 @@ export default {
       this.errors = '';
       this.userAvatar = '';
       this.userName = '';
+    },
+    async getDepartments() {
+      const response = await fetch(`http://localhost:8000/api/departments`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        },
+      });
+      if (response.status == 500) {
+
+      } else {
+        this.departments = await response.json();
+        this.departments = this.departments.data;
+      }
+    },
+    async openStudentInfo()
+    {
+      this.showStudentModal = true;
+      const response = await fetch(`http://localhost:8000/api/students/params`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        },
+      });
+      const responseData = await response.json();
+      if (response.status == 422) {
+
+      } else {
+        if (responseData) {
+
+        }
+      }
+    },
+    async updateStudentParams()
+    {
+      const response = await fetch('http://localhost:8000/api/students/params/update', {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt'),
+        },
+        method: "post",
+        body: JSON.stringify({
+          params: {
+            1: {
+              name: 'COURSE',
+              value: `${this.studentCourse}`
+            },
+            2: {
+              name: "DEPARTMENT_ID",
+              value: `${this.studentDepartmentId}`
+            },
+            3: {
+              name: "GROUP",
+              value: `${this.studentGroup}`
+            },
+            4: {
+              name: "STUDENT_ID",
+              value: `${this.studentId}`
+            }
+          }
+        })
+      })
+      let responseData = await response.json();
+      this.errors = new Object();
+      if (response.ok) {
+        responseData = responseData.data;
+        this.updateParams(responseData);
+        this.closeStudentParamModal();
+      } else if (response.status == 422) {
+        console.log(responseData)
+        const errors = responseData.errors;
+        this.errors.name = errors.name ? errors.name[0] : null;
+      }
+    },
+    closeStudentParamModal() {
+      this.showStudentModal = false;
+    },
+    async getStudentParams() {
+      const response = await fetch('http://localhost:8000/api/students/params', {
+        headers: {
+          'Content-Type': "application/json",
+          'Accept': "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        }
+      })
+
+      let responseData = await response.json();
+      responseData = responseData.data;
+      if (responseData) {
+        this.updateParams(responseData)
+      }
+    },
+    updateParams(responseData) {
+      for(let i = 0; i < responseData.length; i++) {
+        if (responseData[i].name == "STUDENT_ID") {
+          this.studentId = responseData[i].value;
+        }
+        if (responseData[i].name == 'DEPARTMENT_ID') {
+          this.studentDepartmentId = responseData[i].value;
+        }
+        if (responseData[i].name == "COURSE") {
+          this.studentCourse = responseData[i].value;
+        }
+        if (responseData[i].name == 'GROUP') {
+          this.studentGroup = responseData[i].value
+        }
+      }
     }
   }
 }

@@ -6,6 +6,7 @@
           <img class="rounded-circle" :src="manager.avatar" alt="Generic placeholder image" width="200" height="200">
           <h1 class="jumbotron-heading">{{ manager.name }}</h1>
           <p class="lead text-muted">{{ manager.email }}</p>
+          <NuxtLink :to="`/departments/${manager.department.id}`" class="btn btn-primary">Информация о отделении</NuxtLink>
         </div>
       </section>
     </div>
@@ -17,6 +18,7 @@
           <p>{{ manager.email }}</p>
           <p><NuxtLink :to="`/managers/${manager.id}`" class="btn btn-secondary" href="#" role="button">Посмотреть подробную информацию »</NuxtLink></p>
         </div><!-- /.col-lg-4 -->
+        <NuxtLink :to=`/departments/${manager.department.id}`>Информация о отделении</NuxtLink>
       </div>
     </div>
   </div>
