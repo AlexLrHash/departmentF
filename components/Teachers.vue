@@ -120,9 +120,10 @@ export default {
           this.showErrorModal = true;
         } else if (response.status == 403) {
           this.$router.push({path: '/auth/verify/'});
-        } else {
-          this.teacherCountLikes ++;
-          // this.teacher = this.teacher.data;
+        } else if (response.status == 401) {
+          this.$router.push({path: '/auth/login/'});
+        }else {
+          this.teacherCountLikes++;
         }
       }
     },

@@ -11,7 +11,9 @@
         <div class="ml-2">
           <select v-model="userRole" class="form-control" id="">
             <option value="TEACHER">Преподаватель</option>
-            <option value=""></option>
+            <option value="STUDENT">Студенты</option>
+            <option value="MANAGER">Зав. Отделения</option>
+            <option value="ADMIN">Администраторы</option>
           </select>
         </div>
         <div class="ml-2">
@@ -84,7 +86,9 @@
           <select v-model="userRoleForCreating" class="form-control mt-2">
             <option value="" disabled>Выберите роль</option>
             <option value="TEACHER">Преподаватель</option>
-            <option value="ADMIN">Администратор</option>
+            <option value="STUDENT">Студенты</option>
+            <option value="MANAGER">Зав. Отделения</option>
+            <option value="ADMIN">Администраторы</option>
           </select>
         </div>
         <div class="row text-center">
