@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async registerUser() {
-      const response = await fetch('http://localhost:8000/api/register', {
+      const response = await fetch('http://laravel.test/api/register', {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"

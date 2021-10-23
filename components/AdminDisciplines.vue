@@ -154,7 +154,7 @@ export default {
   },
   methods: {
     async getDisciplines() {
-      const response = await fetch(`http://localhost:8000/api/admin/disciplines?name=${this.disciplineName}&teacher=${this.disciplineTeacher}`, {
+      const response = await fetch(`http://laravel.test/api/admin/disciplines?name=${this.disciplineName}&teacher=${this.disciplineTeacher}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -170,7 +170,7 @@ export default {
     },
     async getDisciplineTeachers(val) {
       console.log('ues');
-      const response = await fetch(`http://localhost:8000/api/admin/users?name=${val}`, {
+      const response = await fetch(`http://laravel.test/api/admin/users?name=${val}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -190,7 +190,7 @@ export default {
     },
 
     async getDepartments() {
-      const response = await fetch(`http://localhost:8000/api/admin/departments`, {
+      const response = await fetch(`http://laravel.test/api/admin/departments`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -205,7 +205,7 @@ export default {
       }
     },
     async createDiscipline() {
-      const response = await fetch(`http://localhost:8000/api/admin/disciplines`, {
+      const response = await fetch(`http://laravel.test/api/admin/disciplines`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -238,7 +238,7 @@ export default {
       this.showDeleteModal = true;
     },
     async deleteDiscipline() {
-      const response = await fetch(`http://localhost:8000/api/admin/disciplines/${this.disciplineId}`, {
+      const response = await fetch(`http://laravel.test/api/admin/disciplines/${this.disciplineId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -266,7 +266,7 @@ export default {
       }
     },
     async updateDiscipline() {
-      const response = await fetch(`http://localhost:8000/api/admin/disciplines/update/${this.disciplineId}`, {
+      const response = await fetch(`http://laravel.test/api/admin/disciplines/update/${this.disciplineId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

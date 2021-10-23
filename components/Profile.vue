@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     async getUser() {
-      const response = await fetch('http://localhost:8000/api/user', {
+      const response = await fetch('http://laravel.test/api/user', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -124,7 +124,7 @@ export default {
     },
     async updateUserProfile()
     {
-      const response = await fetch('http://localhost:8000/api/user/profile/update', {
+      const response = await fetch('http://laravel.test/api/user/profile/update', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -151,7 +151,7 @@ export default {
       if (this.userAvatar) {
         const formData = new FormData();
         formData.append('avatar', this.userAvatar);
-        const response = await fetch('http://localhost:8000/api/user/avatar/upload', {
+        const response = await fetch('http://laravel.test/api/user/avatar/upload', {
           headers: {
             'Authorization': "Bearer " + localStorage.getItem('jwt'),
           },
@@ -177,7 +177,7 @@ export default {
       this.userName = '';
     },
     async getDepartments() {
-      const response = await fetch(`http://localhost:8000/api/departments`, {
+      const response = await fetch(`http://laravel.test/api/departments`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -194,7 +194,7 @@ export default {
     async openStudentInfo()
     {
       this.showStudentModal = true;
-      const response = await fetch(`http://localhost:8000/api/students/params`, {
+      const response = await fetch(`http://laravel.test/api/students/params`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -212,7 +212,7 @@ export default {
     },
     async updateStudentParams()
     {
-      const response = await fetch('http://localhost:8000/api/students/params/update', {
+      const response = await fetch('http://laravel.test/api/students/params/update', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -256,7 +256,7 @@ export default {
       this.showStudentModal = false;
     },
     async getStudentParams() {
-      const response = await fetch('http://localhost:8000/api/students/params', {
+      const response = await fetch('http://laravel.test/api/students/params', {
         headers: {
           'Content-Type': "application/json",
           'Accept': "application/json",

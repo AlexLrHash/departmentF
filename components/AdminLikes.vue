@@ -49,7 +49,7 @@ export default {
     }
   },
   async mounted() {
-    const response = await fetch(`http://localhost:8000/api/admin/teachers/likes`, {
+    const response = await fetch(`http://laravel.test/api/admin/teachers/likes`, {
       headers: {
         'Content-Type': 'application/json',
         "Accept": "application/json",
@@ -69,7 +69,7 @@ export default {
       this.likeId = id
     },
     async deleteLike() {
-      const response = await fetch(`http://localhost:8000/api/admin/teachers/likes/delete/${this.likeId}`, {
+      const response = await fetch(`http://laravel.test/api/admin/teachers/likes/delete/${this.likeId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

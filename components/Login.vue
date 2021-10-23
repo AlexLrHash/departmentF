@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async loginUser() {
-      const response = await fetch('http://localhost:8000/api/login', {
+      const response = await fetch('http://laravel.test/api/login', {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
@@ -73,7 +73,7 @@ export default {
     // TODO авторизация по vk на front
     // async vkAuthorize()
     // {
-    //   const response = await fetch('http://localhost:8000/api/vk/auth', {
+    //   const response = await fetch('http://laravel.test/api/vk/auth', {
     //     headers: {
     //       "Content-Type": "application/json",
     //       'Accept': "application/json"

@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     async getUser() {
-      const response = await fetch('http://localhost:8000/api/admin', {
+      const response = await fetch('http://laravel.test/api/admin', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

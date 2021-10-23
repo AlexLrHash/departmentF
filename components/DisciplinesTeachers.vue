@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     async getTeachers() {
-      const response = await fetch('http://localhost:8000/api/disciplines/teachers/' + this.$route.params.id, {
+      const response = await fetch('http://laravel.test/api/disciplines/teachers/' + this.$route.params.id, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const response = await fetch('http://localhost:8000/api/departments', {
+      const response = await fetch('http://laravel.test/api/departments', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -117,7 +117,7 @@ export default {
       }
     },
     async getManagers() {
-      const response = await fetch('http://localhost:8000/api/managers', {
+      const response = await fetch('http://laravel.test/api/managers', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -130,7 +130,7 @@ export default {
       }
     },
     async getDisciplines() {
-      const response = await fetch('http://localhost:8000/api/disciplines', {
+      const response = await fetch('http://laravel.test/api/disciplines', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -143,7 +143,7 @@ export default {
       }
     },
     async exportPdf() {
-      const response = await fetch('http://localhost:8000/api/disciplines/export/pdf', {
+      const response = await fetch('http://laravel.test/api/disciplines/export/pdf', {
         headers: {
           responseType: 'arraybuffer'
         },
