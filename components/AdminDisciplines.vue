@@ -32,7 +32,7 @@
           <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody v-if="disciplines.length != 0">
         <tr v-for="discipline in disciplines">
           <td></td>
           <td>{{ discipline.name }}</td>
@@ -49,6 +49,9 @@
             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.854 7.146 8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 1 1 .708-.708z"/>
           </svg></button></td>
         </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>Пока дисциплин нет</tr>
         </tbody>
       </table>
     </div>
@@ -154,7 +157,7 @@ export default {
   },
   methods: {
     async getDisciplines() {
-      const response = await fetch(`http://laravel.test/api/admin/disciplines?name=${this.disciplineName}&teacher=${this.disciplineTeacher}`, {
+      const response = await fetch(`http://department.biz/api/admin/disciplines?name=${this.disciplineName}&teacher=${this.disciplineTeacher}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -170,7 +173,7 @@ export default {
     },
     async getDisciplineTeachers(val) {
       console.log('ues');
-      const response = await fetch(`http://laravel.test/api/admin/users?name=${val}`, {
+      const response = await fetch(`http://department.biz/api/admin/users?name=${val}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -190,7 +193,7 @@ export default {
     },
 
     async getDepartments() {
-      const response = await fetch(`http://laravel.test/api/admin/departments`, {
+      const response = await fetch(`http://department.biz/api/admin/departments`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -205,7 +208,7 @@ export default {
       }
     },
     async createDiscipline() {
-      const response = await fetch(`http://laravel.test/api/admin/disciplines`, {
+      const response = await fetch(`http://department.biz/api/admin/disciplines`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -238,7 +241,7 @@ export default {
       this.showDeleteModal = true;
     },
     async deleteDiscipline() {
-      const response = await fetch(`http://laravel.test/api/admin/disciplines/${this.disciplineId}`, {
+      const response = await fetch(`http://department.biz/api/admin/disciplines/${this.disciplineId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -266,7 +269,7 @@ export default {
       }
     },
     async updateDiscipline() {
-      const response = await fetch(`http://laravel.test/api/admin/disciplines/update/${this.disciplineId}`, {
+      const response = await fetch(`http://department.biz/api/admin/disciplines/update/${this.disciplineId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

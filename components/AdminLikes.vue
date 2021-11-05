@@ -9,7 +9,7 @@
         <td></td>
       </tr>
       </thead>
-      <tbody>
+      <tbody v-if="likes.length">
       <tr v-for="like in likes">
         <td></td>
         <td>{{ like.user.name }}</td>
@@ -21,6 +21,9 @@
           </button>
         </td>
       </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>Пока нет лайков</tr>
       </tbody>
     </table>
     <b-modal id="bv-modal-example" v-model="showDeleteModal" hide-footer>
@@ -49,7 +52,7 @@ export default {
     }
   },
   async mounted() {
-    const response = await fetch(`http://laravel.test/api/admin/teachers/likes`, {
+    const response = await fetch(`http://department.biz/api/admin/teachers/likes`, {
       headers: {
         'Content-Type': 'application/json',
         "Accept": "application/json",
@@ -69,7 +72,7 @@ export default {
       this.likeId = id
     },
     async deleteLike() {
-      const response = await fetch(`http://laravel.test/api/admin/teachers/likes/delete/${this.likeId}`, {
+      const response = await fetch(`http://department.biz/api/admin/teachers/likes/delete/${this.likeId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

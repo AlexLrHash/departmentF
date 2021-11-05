@@ -75,7 +75,7 @@ export default {
   async mounted() {
     this.teacherId = this.$route.params.id;
     if (this.teacherId) {
-      const response = await fetch('http://laravel.test/api/teachers/' + this.teacherId, {
+      const response = await fetch('http://department.biz/api/teachers/' + this.teacherId, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -90,7 +90,7 @@ export default {
         this.teacherCountDislikes = this.teacher.count_dislikes;
       }
     } else {
-      const response = await fetch('http://laravel.test/api/teachers', {
+      const response = await fetch('http://department.biz/api/teachers', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -108,7 +108,7 @@ export default {
     async likeTeacher() {
       this.teacherId = this.$route.params.id;
       if (this.teacherId) {
-        const response = await fetch(`http://laravel.test/api/teachers/${this.teacherId}/like`, {
+        const response = await fetch(`http://department.biz/api/teachers/${this.teacherId}/like`, {
           headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",

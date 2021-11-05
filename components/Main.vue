@@ -16,7 +16,7 @@
           <li class="nav-item">
             <NuxtLink :to="`departments/${department.id}`" class="nav-link active" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" style="--darkreader-inline-stroke: currentColor; --darkreader-inline-fill: none;" data-darkreader-inline-stroke="" data-darkreader-inline-fill=""><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              {{ department.name }} <span class="sr-only">(current)</span>
+              <span>{{ department.name }}</span>
             </NuxtLink>
           </li>
         </ul>
@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const response = await fetch('http://laravel.test/api/departments', {
+      const response = await fetch('http://department.biz/api/departments', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -117,7 +117,7 @@ export default {
       }
     },
     async getManagers() {
-      const response = await fetch('http://laravel.test/api/managers', {
+      const response = await fetch('http://department.biz/api/managers', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -130,7 +130,7 @@ export default {
       }
     },
     async getDisciplines() {
-      const response = await fetch('http://laravel.test/api/disciplines', {
+      const response = await fetch('http://department.biz/api/disciplines', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -143,7 +143,7 @@ export default {
       }
     },
     async exportPdf() {
-      const response = await fetch('http://laravel.test/api/disciplines/export/pdf', {
+      const response = await fetch('http://department.biz/api/disciplines/export/pdf', {
         headers: {
           responseType: 'arraybuffer'
         },

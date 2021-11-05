@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async verify() {
-      const response = await fetch('http://laravel.test/api/user/token/verify/', {
+      const response = await fetch('http://department.biz/api/user/token/verify/', {
         method: "post",
         headers: {
           'Content-Type': "application/json",
@@ -54,7 +54,7 @@ export default {
       }
     },
     async resendEmail() {
-      const response = await fetch('http://laravel.test/api/user/token/verify/resend', {
+      const response = await fetch('http://department.biz/api/user/token/verify/resend', {
         method: "POST",
         headers: {
           'Content-Type': "application/json",

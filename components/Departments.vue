@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const response = await fetch('http://laravel.test/api/departments', {
+      const response = await fetch('http://department.biz/api/departments', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -76,7 +76,7 @@ export default {
       }
     },
     async getDepartment(id) {
-      const response = await fetch('http://laravel.test/api/departments/' + id, {
+      const response = await fetch('http://department.biz/api/departments/' + id, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

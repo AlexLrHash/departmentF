@@ -32,7 +32,7 @@ export default {
       this.$router.push({path: '/auth/login'});
     },
     async getUser() {
-      const response = await fetch('http://laravel.test/api/user', {
+      const response = await fetch('http://department.biz/api/user', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

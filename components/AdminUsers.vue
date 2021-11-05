@@ -171,7 +171,7 @@ export default {
   },
   methods: {
     async getTeachers() {
-      const response = await fetch(`http://laravel.test/api/admin/users?name=${this.userName}&email=${this.userEmail}&role=${this.userRole}`, {
+      const response = await fetch(`http://department.biz/api/admin/users?name=${this.userName}&email=${this.userEmail}&role=${this.userRole}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -186,7 +186,7 @@ export default {
       }
     },
     async createUser() {
-      const response = await fetch('http://laravel.test/api/admin/users/create', {
+      const response = await fetch('http://department.biz/api/admin/users/create', {
         headers: {
           'Content-Type': "application/json",
           'Accept': "application/json",
@@ -219,7 +219,7 @@ export default {
       this.showDeleteModal = true
     },
     async deleteUser() {
-      const response = await fetch(`http://laravel.test/api/admin/users/delete/${this.userId}`, {
+      const response = await fetch(`http://department.biz/api/admin/users/delete/${this.userId}`, {
         headers: {
           'Content-Type': "application/json",
           'Accept': "application/json",
@@ -255,7 +255,7 @@ export default {
     },
     async updateUser()
     {
-      const response = await fetch(`http://laravel.test/api/admin/users/update/${this.userId}`, {
+      const response = await fetch(`http://department.biz/api/admin/users/update/${this.userId}`, {
         headers: {
           'Content-Type': "application/json",
           'Accept': "application/json",

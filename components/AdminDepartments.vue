@@ -144,7 +144,7 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const response = await fetch(`http://laravel.test/api/admin/departments?name=${this.departmentName}&manager=${this.departmentManager}`, {
+      const response = await fetch(`http://department.biz/api/admin/departments?name=${this.departmentName}&manager=${this.departmentManager}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -161,7 +161,7 @@ export default {
       this.departmentManager = managerName;
     },
     async getManagers(val) {
-      const response = await fetch(`http://laravel.test/api/admin/users?name=${val}&email=&role=MANAGER`, {
+      const response = await fetch(`http://department.biz/api/admin/users?name=${val}&email=&role=MANAGER`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -175,7 +175,7 @@ export default {
       }
     },
     async getAllManagers() {
-      const response = await fetch(`http://laravel.test/api/admin/managers`, {
+      const response = await fetch(`http://department.biz/api/admin/managers`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -189,7 +189,7 @@ export default {
       }
     },
     async createDepartment() {
-      const response = await fetch(`http://laravel.test/api/admin/departments/create`, {
+      const response = await fetch(`http://department.biz/api/admin/departments/create`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -238,7 +238,7 @@ export default {
       this.errors = '';
     },
     async deleteDepartment() {
-      const response = await fetch(`http://laravel.test/api/admin/departments/delete/${this.departmentId}`, {
+      const response = await fetch(`http://department.biz/api/admin/departments/delete/${this.departmentId}`, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -256,7 +256,7 @@ export default {
       }
     },
     async updateDepartment() {
-        const response = await fetch(`http://laravel.test/api/admin/departments/update/${this.departmentId}`, {
+        const response = await fetch(`http://department.biz/api/admin/departments/update/${this.departmentId}`, {
           headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",

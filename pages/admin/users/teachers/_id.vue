@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     async getTeachers() {
-      const response = await fetch('http://laravel.test/api/admin/users/' + this.$route.params.id, {
+      const response = await fetch('http://department.biz/api/admin/users/' + this.$route.params.id, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -141,7 +141,7 @@ export default {
       }
     },
     async getDisciplines() {
-      const response = await fetch('http://laravel.test/api/admin/disciplines', {
+      const response = await fetch('http://department.biz/api/admin/disciplines', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -156,7 +156,7 @@ export default {
       }
     },
     async addDiscipline(id) {
-      const response = await fetch('http://laravel.test/api/admin/teachers/' + this.user.id + '/disciplines/' + id + '/add', {
+      const response = await fetch('http://department.biz/api/admin/teachers/' + this.user.id + '/disciplines/' + id + '/add', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -185,7 +185,7 @@ export default {
       }
     },
     async removeDiscipline(id) {
-      const response = await fetch('http://laravel.test/api/admin/teachers/' + this.user.id + '/disciplines/' + id + '/remove', {
+      const response = await fetch('http://department.biz/api/admin/teachers/' + this.user.id + '/disciplines/' + id + '/remove', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
