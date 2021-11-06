@@ -73,6 +73,7 @@
     <div class="" v-if="user.role == 'TEACHER'">
       <h3>Преподаватель</h3>
       <NuxtLink class="btn btn-primary" :to="`/teachers/${user.id}`">Перейди на страницу</NuxtLink>
+      <NuxtLink class="btn btn-primary" to="/groups/">Группы преподавателя</NuxtLink>
     </div>
     <div class="" v-if="user.role == 'ADMIN'">
       <h3>Админ</h3>

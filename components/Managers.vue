@@ -3,10 +3,11 @@
     <div class="" v-if="manager">
       <section class="jumbotron text-center">
         <div class="container">
-          <img class="rounded-circle" :src="manager.avatar" alt="Generic placeholder image" width="200" height="200">
+          <img class="" :src="manager.avatar" alt="Generic placeholder image" height="200">
           <h1 class="jumbotron-heading">{{ manager.name }}</h1>
           <p class="lead text-muted">{{ manager.email }}</p>
-          <NuxtLink :to="`/departments/${manager.department.id}`" class="btn btn-primary">Информация о отделении</NuxtLink>
+          <p>Заведующий отделением: {{ manager.department.name }}</p>
+          <NuxtLink :to="`/departments/${manager.department.id}`" class="btn btn-primary">Подробнее</NuxtLink>
         </div>
       </section>
     </div>

@@ -28,11 +28,11 @@
                   <NuxtLink :to="`/managers/${department.manager ? department.manager.id :'' }`" class="d-flex align-items-center text-muted" style="margin-left: 10px;">{{ department.manager ? department.manager.name : ''}}</NuxtLink>
                 </div>
               </h6>
-              <p class="nav-link active">Все преподаватели отделения</p>
-              <ul class="nav flex-column" v-for="teacher in departments.teachers">
+              <br>
+              <h5 class="nav-link active">Все преподаватели отделения</h5>
+              <ul class="nav flex-column" v-for="teacher in department.teachers">
                 <li class="nav-item">
                   <NuxtLink :to="`/teachers/${teacher.id}`" class="nav-link active" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" style="--darkreader-inline-stroke: currentColor; --darkreader-inline-fill: none;" data-darkreader-inline-stroke="" data-darkreader-inline-fill=""><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>{{ teacher.name }}</span>
                   </NuxtLink>
                 </li>
