@@ -23,7 +23,7 @@
               <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody v-if="teacher.disciplines.length != 0">
             <tr v-for="discipline in teacher.disciplines">
               <td>{{ discipline.name }}</td>
               <td>{{ discipline.description }}</td>
@@ -31,6 +31,9 @@
               <td>{{ discipline.number_of_labs }}</td>
               <td><NuxtLink :to="`/disciplines/${discipline.id}`" class="btn btn-primary">Подробнее >></NuxtLink></td>
             </tr>
+            </tbody>
+            <tbody v-else>
+               У преподавателя нет дисциплин
             </tbody>
           </table>
         </div>
