@@ -23,7 +23,12 @@
             </h3>
             <div class="mb-1 text-muted">{{ group.created_at }}</div>
             <p class="card-text mb-auto">{{ group.description }}</p>
-            <NuxtLink :to="`/groups/${group.id}`" href="#">Подробнее</NuxtLink>
+            <div class="row">
+              <NuxtLink class="ml-2 btn btn-primary" :to="`/groups/${group.id}`" href="#">Подробнее</NuxtLink>
+              <div v-if="user.role=='TEACHER'">
+                <button class="ml-4 btn btn-danger" @click="showDeleteGroupModal = true; groupId = group.id">Удалить группу</button>
+              </div>
+            </div>
           </div>
           <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb"
                alt="Thumbnail [200x250]" style="width: 200px; height: 250px;"
@@ -33,6 +38,19 @@
       </div>
     </div>
 
+    <b-modal id="bv-modal-example" v-model="showDeleteGroupModal" hide-footer>
+      <template #modal-title>
+        Удаление группы
+      </template>
+      <div class="d-block text-center">
+        Вы действительно хотите удалить?
+      </div>
+      <div class="row text-center">
+        <b-button class="col-5 ml-4 mr-2 mt-3 btn btn-danger" block @click="deleteGroup">Удалить</b-button>
+        <b-button class="col-5 ml-2 mt-3" block @click="closeRemoveTaskModal">Отмена</b-button>
+      </div>
+    </b-modal>
+
     <b-modal id="bv-modal-example" v-model="showCreateGroupModal" hide-footer>
       <template #modal-title>
         Создание группы
@@ -41,7 +59,7 @@
         <div class="" v-if="errors.name">
           <div class="text-danger">{{ errors.name }}</div>
         </div>
-        <input type="text" placeholder="Введите название дисциплины" v-model="nameForCreating" class="form-control">
+        <input type="text" placeholder="Введите название группы" v-model="nameForCreating" class="form-control">
         <div class="" v-if="errors.description">
           <div class="text-danger">{{ errors.description }}</div>
         </div>
@@ -73,18 +91,59 @@ export default {
       nameForCreating: '',
       descriptionForCreating: '',
       disciplineForCreating: '',
-      disciplines: ''
+      disciplines: '',
+      showDeleteGroupModal: false,
+      groupId: '',
+      user: ''
     }
   },
   async mounted()
   {
-    await this.getTeacherGroups();
+    await this.getUser();
+
+    if (this.user.role == "STUDENT") {
+      await this.getStudentGroups();
+    } else {
+      await this.getTeacherGroups();
+    }
+
     await this.getDisciplines()
   },
   methods: {
+    async getUser() {
+      const response = await fetch('http://department.biz/api/user', {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt'),
+        },
+      });
+      if (response.ok) {
+        this.user = await response.json();
+        this.user = this.user.data;
+      }
+    },
     async getTeacherGroups()
     {
       const response = await fetch('http://department.biz/api/groups', {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt'),
+        },
+      });
+      if (response.ok) {
+        this.groups = await response.json();
+        this.groups = this.groups.data;
+      } else if (response.status == 401) {
+        this.$router.push('/errors/unauthenticated');
+      } else if (response.status == 403) {
+        this.$router.push('/errors/permissions');
+      }
+    },
+    async getStudentGroups()
+    {
+      const response = await fetch('http://department.biz/api/student/groups', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -148,10 +207,38 @@ export default {
       this.nameForCreating = '';
       this.disciplineForCreating = '';
       this.descriptionForCreating = '';
+      this.errors = '';
     },
     closeCreateGroupModal() {
       this.resetData();
       this.showCreateGroupModal = false;
+    },
+    async deleteGroup() {
+      const response = await fetch(`http://department.biz/api/groups/${this.groupId}/delete`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+          'Authorization': "Bearer " + localStorage.getItem('jwt')
+        },
+        method: 'post',
+        body: JSON.stringify({
+        })
+      })
+      const responseData = await response.json();
+      if (response.status == 422) {
+      } else {
+        for (let i = 0; i < this.groups.length; i++) {
+          if (this.groups[i].id == this.groupId) {
+            this.groups.splice(i, 1);
+          }
+        }
+        this.showDeleteGroupModal = false
+        this.resetData();
+      }
+    },
+    closeRemoveTaskModal() {
+      this.showRemoveTaskModal = false;
+      this.resetData();
     }
   }
 }

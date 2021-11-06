@@ -42,6 +42,7 @@ export default {
       if (response.ok) {
         this.user = await response.json();
         this.user = this.user.data;
+        this.$emit('getUser', 'asd');
       }
     }
   }

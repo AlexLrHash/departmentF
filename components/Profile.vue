@@ -69,6 +69,7 @@
     <div class="" v-if="user.role == 'STUDENT'">
       <h3>Студент</h3>
       <button @click="openStudentInfo" class="btn btn-primary">Посмотреть вашу студенческую информацию</button>
+      <NuxtLink class="btn btn-primary" to="/groups/">Группы студента</NuxtLink>
     </div>
     <div class="" v-if="user.role == 'TEACHER'">
       <h3>Преподаватель</h3>
