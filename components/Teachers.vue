@@ -23,7 +23,7 @@
               <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody v-if="teacher.disciplines.length != 0">
             <tr v-for="discipline in teacher.disciplines">
               <td>{{ discipline.name }}</td>
               <td>{{ discipline.description }}</td>
@@ -31,6 +31,9 @@
               <td>{{ discipline.number_of_labs }}</td>
               <td><NuxtLink :to="`/disciplines/${discipline.id}`" class="btn btn-primary">Подробнее >></NuxtLink></td>
             </tr>
+            </tbody>
+            <tbody v-else>
+               У преподавателя нет дисциплин
             </tbody>
           </table>
         </div>
@@ -75,7 +78,7 @@ export default {
   async mounted() {
     this.teacherId = this.$route.params.id;
     if (this.teacherId) {
-      const response = await fetch('http://localhost:8000/api/teachers/' + this.teacherId, {
+      const response = await fetch('http://department.biz/api/teachers/' + this.teacherId, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -90,7 +93,7 @@ export default {
         this.teacherCountDislikes = this.teacher.count_dislikes;
       }
     } else {
-      const response = await fetch('http://localhost:8000/api/teachers', {
+      const response = await fetch('http://department.biz/api/teachers', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -108,7 +111,7 @@ export default {
     async likeTeacher() {
       this.teacherId = this.$route.params.id;
       if (this.teacherId) {
-        const response = await fetch(`http://localhost:8000/api/teachers/${this.teacherId}/like`, {
+        const response = await fetch(`http://department.biz/api/teachers/${this.teacherId}/like`, {
           headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",

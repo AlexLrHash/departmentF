@@ -1,13 +1,44 @@
 <template>
   <div class="">
     <main role="main" v-if="departmentId">
-      <div :style="{background: 'url('+department.background+')', height: '700px'}">
-        <div class="col-6 pt-5">
-          <h1 class="text-center text-dark">{{ department.name }}</h1>
-          <p class="lead font-weight-normal">Все о данном отделении: {{ department.description }}</p>
+      <h1 class="text-center text-dark">{{ department.name }}</h1>
+      <div class="row">
+        <div class="col-6 mr-5">
+          <img width="600" class="mt-2" :src="department.background" alt="">
+          <div class="pt-5">
+            <p class="lead font-weight-normal">{{ department.description }}</p>
+          </div>
+          <div class="product-device box-shadow d-none d-md-block"></div>
+          <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
         </div>
-        <div class="product-device box-shadow d-none d-md-block"></div>
-        <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+          <nav class="col-md-4 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Отделения</span>
+                <a class="d-flex align-items-center text-muted" href="#" style="margin-left: 10px">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                  </svg>
+                </a>
+              </h6>
+              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>Заведующий отделений</span>
+                <div v-if="department.manager">
+                  <NuxtLink :to="`/managers/${department.manager ? department.manager.id :'' }`" class="d-flex align-items-center text-muted" style="margin-left: 10px;">{{ department.manager ? department.manager.name : ''}}</NuxtLink>
+                </div>
+              </h6>
+              <p class="nav-link active">Все преподаватели отделения</p>
+              <ul class="nav flex-column" v-for="teacher in departments.teachers">
+                <li class="nav-item">
+                  <NuxtLink :to="`/teachers/${teacher.id}`" class="nav-link active" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" style="--darkreader-inline-stroke: currentColor; --darkreader-inline-fill: none;" data-darkreader-inline-stroke="" data-darkreader-inline-fill=""><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>{{ teacher.name }}</span>
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+          </nav>
       </div>
     </main>
     <main v-else>
@@ -63,7 +94,7 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const response = await fetch('http://localhost:8000/api/departments', {
+      const response = await fetch('http://department.biz/api/departments', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -76,7 +107,7 @@ export default {
       }
     },
     async getDepartment(id) {
-      const response = await fetch('http://localhost:8000/api/departments/' + id, {
+      const response = await fetch('http://department.biz/api/departments/' + id, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

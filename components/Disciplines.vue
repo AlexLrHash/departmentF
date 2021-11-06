@@ -51,7 +51,7 @@ export default {
   async mounted() {
     this.disciplineId = this.$route.params.id;
     if (this.disciplineId) {
-      const response = await fetch('http://localhost:8000/api/disciplines/' + this.disciplineId, {
+      const response = await fetch('http://department.biz/api/disciplines/' + this.disciplineId, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -64,7 +64,7 @@ export default {
         this.discipline = this.discipline.data;
       }
     } else {
-      const response = await fetch('http://localhost:8000/api/disciplines', {
+      const response = await fetch('http://department.biz/api/disciplines', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",

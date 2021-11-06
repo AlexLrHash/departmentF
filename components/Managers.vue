@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async getManager() {
-      const response = await fetch('http://localhost:8000/api/managers/' + this.managerId, {
+      const response = await fetch('http://department.biz/api/managers/' + this.managerId, {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
@@ -59,7 +59,7 @@ export default {
     },
     async getManagers()
     {
-      const response = await fetch('http://localhost:8000/api/managers', {
+      const response = await fetch('http://department.biz/api/managers', {
         headers: {
           'Content-Type': 'application/json',
           "Accept": "application/json",
