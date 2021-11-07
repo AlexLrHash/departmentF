@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     async registerUser() {
+      this.errors = '';
       const response = await fetch('http://department.biz/api/register', {
         headers: {
           "Content-Type": "application/json",

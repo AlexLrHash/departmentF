@@ -8,7 +8,7 @@
                                 class="text-white font-weight-bold">Подробнее...</a></p>
       </div>
       <br>
-      <button class="btn btn-success" @click="showCreateGroupModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+      <button v-if="user.role == 'TEACHER'" class="btn btn-success" @click="showCreateGroupModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
         <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
       </svg> Добавить групу</button>
     </div>
@@ -17,9 +17,9 @@
       <div class="col-md-6" v-for="group in groups">
         <div class="card flex-md-row mb-4 box-shadow h-md-250">
           <div class="card-body d-flex flex-column align-items-start">
-            <strong class="d-inline-block mb-2 text-primary">{{ group.discipline ? group.discipline.name : ''  }}</strong>
+            <NuxtLink :to="`/disciplines/${group.discipline.id}`"><strong class="d-inline-block mb-2 text-primary">{{ group.discipline ? group.discipline.name : ''  }}</strong></NuxtLink>
             <h3 class="mb-0">
-              <a class="text-dark" href="#">{{ group.name }}</a>
+              <span class="text-dark" href="#">{{ group.name }}</span>
             </h3>
             <div class="mb-1 text-muted">{{ group.created_at }}</div>
             <p class="card-text mb-auto">{{ group.description }}</p>

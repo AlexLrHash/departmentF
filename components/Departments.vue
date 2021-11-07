@@ -30,13 +30,18 @@
               </h6>
               <br>
               <h5 class="nav-link active">Все преподаватели отделения</h5>
-              <ul class="nav flex-column" v-for="teacher in department.teachers">
-                <li class="nav-item">
-                  <NuxtLink :to="`/teachers/${teacher.id}`" class="nav-link active" href="#">
-                    <span>{{ teacher.name }}</span>
-                  </NuxtLink>
-                </li>
-              </ul>
+              <div class="" v-if="department.teachers && department.teachers.length != 0">
+                <ul class="nav flex-column" v-for="teacher in department.teachers">
+                  <li class="nav-item">
+                    <NuxtLink :to="`/teachers/${teacher.id}`" class="nav-link active" href="#">
+                      <span>{{ teacher.name }}</span>
+                    </NuxtLink>
+                  </li>
+                </ul>
+              </div>
+              <div v-else class="ml-3">
+                Тут пока пусто
+              </div>
             </div>
           </nav>
       </div>
